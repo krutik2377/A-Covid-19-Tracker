@@ -12,7 +12,7 @@ import com.usermanagement.bean.User;
 
 public class UserDao {
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/demo ";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/users ";
 	private String jdbcUsername = "root";
 	private String jdbcPassword = "root@1234";
 	private String jdbcDriver = "com.mysql.jdbc.Driver";
