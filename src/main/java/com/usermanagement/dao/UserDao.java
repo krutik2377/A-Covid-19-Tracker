@@ -17,13 +17,13 @@ public class UserDao {
 	private String jdbcPassword = "root@1234";
 	private String jdbcDriver = "com.mysql.jdbc.Driver";
 	
-	private static final String INSERT_USERS_SQL = "INSERT INTO users" + "  (name, email, country) VALUES "
-			+ " (?, ?, ?);";
+	private static final String INSERT_DATA_INTO_SQL = "INSERT INTO covid" + "  (country, total_case, total_death, total_recovered) VALUES "
+			+ " (?, ?, ?, ?);";
 
-	private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
-	private static final String SELECT_ALL_USERS = "select * from users";
-	private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
-	private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
+	private static final String SELECT_DATA_BY_COUNTRY = "select country,total_case,total_death,total_recovered from covid where country =?";
+	private static final String SELECT_ALL_DATA = "select * from covid";
+	private static final String DELETE_DATA_FROM_SQL = "delete from covid where country = ?;";
+	private static final String UPDATE_DATA_OF_SQL = "update covid set total_case = ?, total_death =?, total_recovered =? where country = ?;";
 	
 	public UserDao() {
 	}
@@ -44,13 +44,14 @@ public class UserDao {
 	}
 	
 	public void insertUser(User user) throws SQLException {
-		System.out.println(INSERT_USERS_SQL);
+		System.out.println(INSERT_DATA_INTO_SQL);
 		// try-with-resource statement will auto close the connection.
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
-			preparedStatement.setString(1, user.getName());
-			preparedStatement.setString(2, user.getEmail());
-			preparedStatement.setString(3, user.getCountry());
+				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_DATA_INTO_SQL)) {
+			preparedStatement.setString(1, user.getCountry());
+			preparedStatement.setInt(2, user.getTotal_case());
+			preparedStatement.setInt(3, user.getTotal_death());
+			preparedStatement.setInt(4, user.getTotal_recovered());
 			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -58,23 +59,24 @@ public class UserDao {
 		}
 	}
 	
-	public User selectUser(int id) {
+	public User selectUser(String coun) {
 		User user = null;
 		// Step 1: Establishing a Connection
 		try (Connection connection = getConnection();
 				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
-			preparedStatement.setInt(1, id);
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DATA_BY_COUNTRY);) {
+			preparedStatement.setString(1, coun);
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
 			ResultSet rs = preparedStatement.executeQuery();
 
 			// Step 4: Process the ResultSet object.
 			while (rs.next()) {
-				String name = rs.getString("name");
-				String email = rs.getString("email");
 				String country = rs.getString("country");
-				user = new User(id, name, email, country);
+				int total_case = rs.getInt("total_case");
+				int total_death = rs.getInt("total_death");
+				int total_recovered = rs.getInt("total_recovered");
+				user = new User(country, total_case, total_death, total_recovered);
 			}
 		} catch (SQLException e) {
 			printSQLException(e);
@@ -90,18 +92,18 @@ public class UserDao {
 		try (Connection connection = getConnection();
 
 				// Step 2:Create a statement using connection object
-			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_DATA);) {
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
 			ResultSet rs = preparedStatement.executeQuery();
 
 			// Step 4: Process the ResultSet object.
 			while (rs.next()) {
-				int id = rs.getInt("id");
-				String name = rs.getString("name");
-				String email = rs.getString("email");
 				String country = rs.getString("country");
-				users.add(new User(id, name, email, country));
+				int total_case = rs.getInt("total_case");
+				int total_death = rs.getInt("total_death");
+				int total_recovered = rs.getInt("total_recovered");
+				users.add(new User(country, total_case, total_death, total_recovered));
 			}
 		} catch (SQLException e) {
 			printSQLException(e);
@@ -112,23 +114,23 @@ public class UserDao {
 	public boolean updateUser(User user) throws SQLException {
 		boolean rowUpdated;
 		try (Connection connection = getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_DATA_OF_SQL);) {
 			System.out.println("updated USer:"+statement);
-			statement.setString(1, user.getName());
-			statement.setString(2, user.getEmail());
-			statement.setString(3, user.getCountry());
-			statement.setInt(4, user.getId());
+			statement.setInt(1, user.getTotal_case());
+			statement.setInt(2, user.getTotal_death());
+			statement.setInt(3, user.getTotal_recovered());
+			statement.setString(4, user.getCountry());
 
 			rowUpdated = statement.executeUpdate() > 0;
 		}
 		return rowUpdated;
 	}
 
-	public boolean deleteUser(int id) throws SQLException {
+	public boolean deleteUser(String country) throws SQLException {
 		boolean rowDeleted;
 		try (Connection connection = getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);) {
-			statement.setInt(1, id);
+				PreparedStatement statement = connection.prepareStatement(DELETE_DATA_FROM_SQL);) {
+			statement.setString(1, country);
 			rowDeleted = statement.executeUpdate() > 0;
 		}
 		return rowDeleted;

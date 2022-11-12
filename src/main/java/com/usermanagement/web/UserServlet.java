@@ -95,8 +95,8 @@ public class UserServlet extends HttpServlet {
 
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		User existingUser = userDAO.selectUser(id);
+		String country = request.getParameter("country");
+		User existingUser = userDAO.selectUser(country);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
 		request.setAttribute("user", existingUser);
 		dispatcher.forward(request, response);
@@ -105,30 +105,30 @@ public class UserServlet extends HttpServlet {
 
 	private void insertUser(HttpServletRequest request, HttpServletResponse response) 
 			throws SQLException, IOException {
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
 		String country = request.getParameter("country");
-		User newUser = new User(name, email, country);
+		int total_case = Integer.parseInt(request.getParameter("total_case"));
+		int total_death = Integer.parseInt(request.getParameter("total_death"));
+		int total_recovered = Integer.parseInt(request.getParameter("total_recovered"));
+		User newUser = new User(country, total_case,total_death, total_recovered);
 		userDAO.insertUser(newUser);
 		response.sendRedirect("list");
 	}
 
 	private void updateUser(HttpServletRequest request, HttpServletResponse response) 
 			throws SQLException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
 		String country = request.getParameter("country");
-
-		User book = new User(id, name, email, country);
+		int total_case = Integer.parseInt(request.getParameter("total_case"));
+		int total_death = Integer.parseInt(request.getParameter("total_death"));
+		int total_recovered = Integer.parseInt(request.getParameter("total_recovered"));
+		User book = new User(country, total_case,total_death, total_recovered);
 		userDAO.updateUser(book);
 		response.sendRedirect("list");
 	}
 
 	private void deleteUser(HttpServletRequest request, HttpServletResponse response) 
 			throws SQLException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		userDAO.deleteUser(id);
+		String country = request.getParameter("country");
+		userDAO.deleteUser(country);
 		response.sendRedirect("list");
 
 	}

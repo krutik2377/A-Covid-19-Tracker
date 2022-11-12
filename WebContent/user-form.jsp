@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<title>User Management Application</title>
+<title>Covid 19 Tracker</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -15,7 +15,7 @@
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: blue">
 			<div>
-				<a href="https://www.xadmin.net" class="navbar-brand"> User Management Application </a>
+				<a  class="navbar-brand"> Covid 19 Tracker </a>
 			</div>
 
 			<ul class="navbar-nav">
@@ -47,25 +47,31 @@
 				</caption>
 
 				<c:if test="${user != null}">
-					<input type="hidden" name="id" value="<c:out value='${user.id}' />" />
+					<input type="hidden" name="country" value="<c:out value='${user.country}' />" />
 				</c:if>
 
 				<fieldset class="form-group">
-					<label>User Name</label> <input type="text"
-						value="<c:out value='${user.name}' />" class="form-control"
-						name="name" required="required">
-				</fieldset>
-
-				<fieldset class="form-group">
-					<label>User Email</label> <input type="text"
-						value="<c:out value='${user.email}' />" class="form-control"
-						name="email">
-				</fieldset>
-
-				<fieldset class="form-group">
-					<label>User Country</label> <input type="text"
+					<label>Country</label> <input type="text"
 						value="<c:out value='${user.country}' />" class="form-control"
-						name="country">
+						name="country" required="required">
+				</fieldset>
+
+				<fieldset class="form-group">
+					<label>Total Case</label> <input type="number"
+						value="<c:out value='${user.total_case}' />" class="form-control"
+						name="total_case">
+				</fieldset>
+
+				<fieldset class="form-group">
+					<label>Total Death</label> <input type="number"
+						value="<c:out value='${user.total_death}' />" class="form-control"
+						name="total_death">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label>Total Recovered</label> <input type="number"
+						value="<c:out value='${user.total_recovered}' />" class="form-control"
+						name="total_recovered" required="required">
 				</fieldset>
 
 				<button type="submit" class="btn btn-success">Save</button>
