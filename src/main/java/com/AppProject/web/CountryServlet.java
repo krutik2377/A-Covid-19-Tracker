@@ -1,31 +1,30 @@
-package com.usermanagement.web;
+package com.AppProject.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.usermanagement.bean.User;
-import com.usermanagement.dao.UserDao;
+import com.AppProject.bean.Country;
+import com.AppProject.dao.CountryDao;
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class CountryServlet
  */
 @WebServlet("/")
-public class UserServlet extends HttpServlet {
+public class CountryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserDao userDAO;
+	private CountryDao countryDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserServlet() {
+    public CountryServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +34,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
-		userDAO = new UserDao();
+		countryDAO = new CountryDao();
 	}
 	
 	/**
@@ -59,19 +58,19 @@ public class UserServlet extends HttpServlet {
 				showNewForm(request, response);
 				break;
 			case "/insert":
-				insertUser(request, response);
+				insertCountry(request, response);
 				break;
 			case "/delete":
-				deleteUser(request, response);
+				deleteCountry(request, response);
 				break;
 			case "/edit":
 				showEditForm(request, response);
 				break;
 			case "/update":
-				updateUser(request, response);
+				updateCountry(request, response);
 				break;
 			default:
-				listUser(request, response);
+				listCountry(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -79,60 +78,59 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 	
-	private void listUser(HttpServletRequest request, HttpServletResponse response)
+	private void listCountry(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
-		List<User> listUser = userDAO.selectAllUsers();
+		List<Country> listUser = countryDAO.selectAllCountries();
 		request.setAttribute("listUser", listUser);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("country-list.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("country-form.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		String country = request.getParameter("country");
-		User existingUser = userDAO.selectUser(country);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
-		request.setAttribute("user", existingUser);
+		Country existingCountry = countryDAO.selectCountry(country);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("country-form.jsp");
+		request.setAttribute("user", existingCountry);
 		dispatcher.forward(request, response);
 
 	}
 
-	private void insertUser(HttpServletRequest request, HttpServletResponse response) 
+	private void insertCountry(HttpServletRequest request, HttpServletResponse response) 
 			throws SQLException, IOException {
 		String country = request.getParameter("country");
 		int total_case = Integer.parseInt(request.getParameter("total_case"));
 		int total_death = Integer.parseInt(request.getParameter("total_death"));
 		int total_recovered = Integer.parseInt(request.getParameter("total_recovered"));
-		User newUser = new User(country, total_case,total_death, total_recovered);
-		userDAO.insertUser(newUser);
+		Country newCountry = new Country(country, total_case,total_death, total_recovered);
+		countryDAO.insertCountry(newCountry);
 		response.sendRedirect("list");
 	}
 
-	private void updateUser(HttpServletRequest request, HttpServletResponse response) 
+	private void updateCountry(HttpServletRequest request, HttpServletResponse response) 
 			throws SQLException, IOException {
 		String country = request.getParameter("country");
 		int total_case = Integer.parseInt(request.getParameter("total_case"));
 		int total_death = Integer.parseInt(request.getParameter("total_death"));
 		int total_recovered = Integer.parseInt(request.getParameter("total_recovered"));
-		User book = new User(country, total_case,total_death, total_recovered);
-		userDAO.updateUser(book);
+		Country book = new Country(country, total_case,total_death, total_recovered);
+		countryDAO.updateCountry(book);
 		response.sendRedirect("list");
-	}
-
-	private void deleteUser(HttpServletRequest request, HttpServletResponse response) 
-			throws SQLException, IOException {
-		String country = request.getParameter("country");
-		userDAO.deleteUser(country);
-		response.sendRedirect("list");
-
 	}
 
 	
+	private void deleteCountry(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, IOException {
+		String country = request.getParameter("country");
+		countryDAO.deleteCountry(country);
+		response.sendRedirect("list");
+
+	}
 
 }

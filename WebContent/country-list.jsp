@@ -13,14 +13,15 @@
 
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
-			style="background-color: blue">
-			<div>
-				<a  class="navbar-brand"> Covid 19 tracker </a>
+			style="background-color: grey">
+			
+			<div style="text-align:center">
+				<a  class="navbar-brand" class="text-center" > Covid 19 tracker</a>
 			</div>
 
 			<ul class="navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/list"
-					class="nav-link">Users</a></li>
+					class="nav-link"></a></li>
 			</ul>
 		</nav>
 	</header>
@@ -30,13 +31,9 @@
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
 		<div class="container">
-			<h3 class="text-center">List of Countries</h3>
+			<h3 class="text-center" >List of Countries</h3>
 			<hr>
-			<div class="container text-left">
-
-				<a href="<%=request.getContextPath()%>/new" class="btn btn-success">Add
-					New Country</a>
-			</div>
+			
 			<br>
 			<table class="table table-bordered">
 				<thead>
@@ -66,6 +63,12 @@
 				</tbody>
 
 			</table>
+			
+			<div class="container text-center">
+
+				<a href="<%=request.getContextPath()%>/new" class="btn btn-secondary btn-block">Add
+					New Country</a>
+			</div>
 		</div>
 	</div>
 </body>

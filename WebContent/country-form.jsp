@@ -13,15 +13,12 @@
 
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
-			style="background-color: blue">
+			style="background-color: grey">
 			<div>
 				<a  class="navbar-brand"> Covid 19 Tracker </a>
 			</div>
+			
 
-			<ul class="navbar-nav">
-				<li><a href="<%=request.getContextPath()%>/list"
-					class="nav-link">Users</a></li>
-			</ul>
 		</nav>
 	</header>
 	<br>
@@ -36,14 +33,17 @@
 				</c:if>
 
 				<caption>
-					<h2>
+					<h2 class="text-center">
 						<c:if test="${user != null}">
-            			Edit User
+            			Edit Country
             		</c:if>
 						<c:if test="${user == null}">
-            			Add New User
+            			Add New Country
             		</c:if>
 					</h2>
+					<hr>
+			
+					<br>	
 				</caption>
 
 				<c:if test="${user != null}">
@@ -74,7 +74,7 @@
 						name="total_recovered" required="required">
 				</fieldset>
 
-				<button type="submit" class="btn btn-success">Save</button>
+				<button type="submit" class="btn btn-secondary btn-block">Save</button>
 				</form>
 			</div>
 		</div>

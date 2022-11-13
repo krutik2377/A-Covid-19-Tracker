@@ -1,14 +1,13 @@
-package com.usermanagement.bean;
+package com.AppProject.bean;
 
-public class User {
-	
+public class Country {
 	private String country;
 	private int total_case;
 	private int total_death;
 	private int total_recovered;
 	
 	
-	public User(String country, int total_case, int total_death, int total_recovered) {
+	public Country(String country, int total_case, int total_death, int total_recovered) {
 		super();
 		this.country = country;
 		this.total_case = total_case;
