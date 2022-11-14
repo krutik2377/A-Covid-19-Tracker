@@ -34,7 +34,7 @@ public class CountryServlet extends HttpServlet {
 	 */
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
-		countryDAO = new CountryDao();
+		countryDAO =CountryDao.getinstance();
 	}
 	
 	/**

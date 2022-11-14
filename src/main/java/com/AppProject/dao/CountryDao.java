@@ -17,11 +17,23 @@ public class CountryDao {
 	private String jdbcPassword = "root@1234";
 	private  String jdbcDriver = "com.mysql.cj.jdbc.Driver";
 	
-	public CountryDao() {
+	private CountryDao() {
 	}
-
+	
+	private static CountryDao S = null; 
+	
+	public static CountryDao getinstance()
+	{
+		if(S == null)
+		{
+			S = new CountryDao();	
+		}
+		return S;
+		
+	}
+	Connection connection = null;
 	protected Connection getConnection() {
-		Connection connection = null;
+		
 		try {
 			Class.forName(jdbcDriver);
 			connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);

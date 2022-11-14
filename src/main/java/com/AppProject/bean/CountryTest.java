@@ -9,19 +9,19 @@ import org.junit.jupiter.api.Test;
 
 import com.AppProject.dao.CountryDao;
 
-class CountryTest {
+class CountryTest{
 
 	@Test
 	public void selectCountry() throws SQLException {
-		CountryDao dao = new CountryDao();
+		CountryDao dao = CountryDao.getinstance();
 		Country country = dao.selectCountry("Alberia");
 		assertNotEquals(country,"");
 		
 	}
 	
-	@Test
+	@Test	
 	public void selectAllCountries() throws SQLException {
-		CountryDao dao = new CountryDao();
+		CountryDao dao = CountryDao.getinstance();
 		List<Country> country = dao.selectAllCountries();
 		assertNotEquals(country,null);
 		assertTrue(country.size()>0);	
@@ -29,7 +29,7 @@ class CountryTest {
 	
 	@Test
 	public void deleteCountry() throws SQLException{
-		CountryDao dao = new CountryDao();
+		CountryDao dao = CountryDao.getinstance();
 		Boolean val = dao.deleteCountry("Canada");
 		Country country = dao.selectCountry("Canada");
 		assertEquals(country,null);
@@ -37,7 +37,7 @@ class CountryTest {
 	
 	@Test
 	public void updateCountry() throws SQLException{
-		CountryDao dao = new CountryDao();
+		CountryDao dao = CountryDao.getinstance();
 		Country country = dao.selectCountry("Angola");
 		country.setCountry("Bhutan");
 		Boolean val = dao.updateCountry(country);
