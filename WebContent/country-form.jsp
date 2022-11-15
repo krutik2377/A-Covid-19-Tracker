@@ -15,7 +15,7 @@
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: grey">
 			<div>
-				<a  class="navbar-brand"> Covid 19 Tracker </a>
+				<a  class="navbar-brand" class="text-center" style="color:white; font-size:25px"> Covid 19 Tracker </a>
 			</div>
 			
 

@@ -15,8 +15,8 @@
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: grey">
 			
-			<div style="text-align:center">
-				<a  class="navbar-brand" class="text-center" > Covid 19 tracker</a>
+			<div style="text-align:center" >
+				<a  class="navbar-brand" class="text-center" style="color:white; font-size:25px"  > Covid 19 tracker</a>
 			</div>
 
 			<ul class="navbar-nav">
@@ -54,9 +54,9 @@
 							<td><c:out value="${user.total_case}" /></td>
 							<td><c:out value="${user.total_death}" /></td>
 							<td><c:out value="${user.total_recovered}" /></td>
-							<td><a href="edit?country=<c:out value='${user.country}' />">Edit</a>
-								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?country=<c:out value='${user.country}' />">Delete</a></td>
+							<td><a class="btn btn-secondary"   href="edit?country=<c:out value='${user.country}' />">Update</a> 
+								&nbsp;&nbsp;&nbsp;&nbsp; <a class="btn btn-secondary"
+								href="delete?country=<c:out value='${user.country}'  />">Delete</a></td>
 						</tr>
 					</c:forEach>
 		
