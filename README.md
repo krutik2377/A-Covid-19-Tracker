@@ -1,0 +1,3 @@
+# A-Covid-19-Tracker
+It is a Web based data processing system that reads API/JSON data, creates a compact local database, and offers basic parameterized query functionality.This project adheres to coding standards, employs relevant design patterns, utilizes refactoring techniques, incorporates testing tools, and provides comprehensive documentation in a Software Architecture Document. The system ensures efficient data handling and retrieval for seamless integration with various applications.
+Here the important thing is that any kind of APIs is not used in this entire project except for presentation of data.
